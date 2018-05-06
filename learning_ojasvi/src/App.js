@@ -1,44 +1,64 @@
 import React, { Component } from 'react';
- import './App.css';
+import './App.css';
 import Person from './Person/Person';
 
 class App extends Component {
 
 	state = {
 		persons: [
-			{name:'Max', age:28},
-			{name:'Manu', age:29},
-			{name:'Stephanie', age:26}
+			{
+        name:'Max',
+        age:28
+      },
+			{
+        name:'Manu',
+        age:29
+      },
+			{
+        name:'Stephanie',
+        age:26
+      }
 		],
-
 		showPersons:false
 	}
 
 	switchNameHandler = (newName) => {
-
-		//console.log('Was Clicked!!!');
+		// console.log('Was Clicked!!!');
 		this.setState({
 			persons: [
-			{name:newName, age:28},
-			{name:'Manu', age:29},
-			{name:'Stephanie', age:27}
-		]
-
+  			{
+          name:newName,
+          age:28
+        },
+  			{
+          name:'Manu',
+          age:29
+        },
+  			{
+          name:'Stephanie',
+          age:27
+        }
+  		]
 		})
 	}
 
 	nameChangedHandler = (event) => {
-
-
 		this.setState({
 			persons: [
-			{name:'Max', age:28},
-			{name: event.target.value, age:29},
-			{name:'Stephanie', age:26}
-		]
-
+			 {
+        name:'Max',
+        age:28
+       },
+			 {
+        name: event.target.value,
+        age:29
+       },
+			 {
+        name:'Stephanie'
+         age:2
+         6}
+		  ]
 		})
-
 	}
 
 	togglePersonsHandler = () => {
@@ -46,12 +66,8 @@ class App extends Component {
 		this.setState({showPersons: !doesShow})
 	}
 
-
-
-
+  
   render() {
-
-
   	const style = {
   		backgroundColor: 'white',
   		font:'inherit',
@@ -62,24 +78,21 @@ class App extends Component {
 
   	let persons = null;
 
-  	if (this.state.showPersons) {
+  	if(this.state.showPersons) {
   		persons = (
   			<div>  
-        <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
-        
-        <Person name={this.state.persons[1].name} 
-        		age={this.state.persons[1].age} 
-        		click = {this.switchNameHandler.bind(this,'Max!!!!!')}
-        		changed = {this.nameChangedHandler} >My Hobbies:racing</Person>
-        <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
-      </div> 
+          <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
 
-  			);
+          <Person name={this.state.persons[1].name} 
+          		age={this.state.persons[1].age} 
+          		click = {this.switchNameHandler.bind(this,'Max!!!!!')}
+          		changed = {this.nameChangedHandler}>
+              My Hobbies:racing
+          </Person>
+          <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
+        </div> 
+  		);
   	}
-
-
-
-
 
     return (
       <div className="App">
@@ -87,7 +100,9 @@ class App extends Component {
         <p>This is really Working!!!</p>
         <button
         	style = {style} 
-        onClick = {this.togglePersonsHandler} >toggle persons</button>
+          onClick = {this.togglePersonsHandler}>
+          toggle persons
+        </button>
       
       	{persons}
 
