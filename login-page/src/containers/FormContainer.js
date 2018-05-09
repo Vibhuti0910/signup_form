@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-
 import RaisedButton from 'material-ui/RaisedButton';
 import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
@@ -56,58 +55,35 @@ class FormContainer extends Component {
 
 				<form className="container-fluid" onSubmit={this.handleFormLogin}>
 
-					
-					
-
 					<TextField
 						hintText="Enter your Username"
 						floatingLabelText="Username"
 						onChange={this.handleUsername}
 						 />
-					
 					<br />
-					
 					<PasswordField
 						hintText="Enter your Password"
 						floatingLabelText="Password"
 						onChange={this.handlePassword}
 						 />
-
 					<br />
-
-
 					<RaisedButton 
 						label ='Login'
 						primary={true}
           				style={buttonStyle}
           				onClick={this.handleFormLogin}/>
-          			
-
           			<RaisedButton
           				label ='Forgot Password' 
           				primary = {true}
           				style={buttonStyle}
           				onClick={this.handleForgotPassword}/>
 
-
-
-          			
-					
-
-
 				</form>
 				</MuiThemeProvider>
 			</div>
 
-
-
-
-
 			);
-	}
- 
-
-	
+		}
 }
 
 const buttonStyle = {
