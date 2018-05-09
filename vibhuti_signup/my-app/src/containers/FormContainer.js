@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import './FormContainer.css';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-// import RaisedButton from 'material-ui/RaisedButton';
-// import AppBar from 'material-ui/AppBar';
+import RaisedButton from 'material-ui/RaisedButton';
+import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
-// import PasswordField from 'material-ui-password-field'
+import PasswordField from 'material-ui-password-field';
+import FlatButton from 'material-ui/FlatButton';
 
 const style = {
   margin: 12,
@@ -15,32 +17,31 @@ class FormContainer extends Component {
 
     this.state = {
       newUser: {
-        name: '',
-        age: '',
+        fname: '',
+        lname: '',
         username : '',
         password : '',
         confirmPassword: ''
       },
     }
-    
-      this.handleAge = this.handleAge.bind(this);
-      this.handleFullName = this.handleFullName.bind(this);
+      this.handleFName = this.handleFName.bind(this);
+      this.handleLName = this.handleLName.bind(this);
       this.handleConfirmPassword = this.handleConfirmPassword.bind(this);
       this.handlePassword = this.handlePassword.bind(this);
       this.handleUsername = this.handleUsername.bind(this);
   }
-  handleFullName(e) {
+  handleFName(e) {
         let value = e.target.value;
       this.setState( prevState => ({ newUser : 
-          {...prevState.newUser, name: value} 
+          {...prevState.newUser, Fname: value} 
         }), () => console.log(this.state.newUser))
   }
 
-  handleAge(e) {
-    let value = e.target.value;
-    this.setState( prevState => ({newUser:
-      {...prevState.newUser,age:value}
-    }), () => console.log(this.state.newUser))
+  handleLName(e) {
+        let value = e.target.value;
+      this.setState( prevState => ({ newUser : 
+          {...prevState.newUser, Lname: value} 
+        }), () => console.log(this.state.newUser))
   }
 
   handleUsername(e) {
@@ -58,14 +59,18 @@ class FormContainer extends Component {
   }
 
   handleConfirmPassword(e) {
-    let value = e.target.value;
-    let prevValue = this.state.password;
-    if (value === prevValue) {
+    let key = e.which;
+    if(key == 13) {
+      let value = e.target.value;
+      let prevValue = this.state.newUser.password;
+      if (value === prevValue) {
         this.setState( prevState => ({newUser:
-      {...prevState.newUser,confirmPassword: value}
-    }), () => console.log(this.state.newUser))
-    } else {
-      alert("password does not match");
+        {...prevState.newUser,confirmPassword: value}
+        }), () => console.log(this.state.newUser))
+        alert("password confirmed")
+      } else {
+      alert(this.state.newUser.password);
+    }
     }
     
   }
@@ -74,38 +79,43 @@ class FormContainer extends Component {
     return(
       <div>
         <form>
-            <TextField
-            defaultValue="name"
-            hintText="enter name"
-            errorText="This field is required"
-            floatingLabelText="enter name"
-            onChange = {this.handleFullName}
-            /><br />
+            <AppBar
+            title="Create your Account"
+            iconClassNameRight="muidocs-icon-navigation-expand-more"
+            />
+            <TextField className = "fname"
+            floatingLabelText="first name"
+            onChange = {this.handleFName}
+            />
 
             <TextField
-            defaultValue="age"
-            hintText="enter age"
-            errorText="This field is required"
-            floatingLabelText="enter age"
-            onChange = {this.handleAge}
-            /><br />
+            floatingLabelText="last name"
+            onChange = {this.handleLName}
+            />
+
+            <br />
 
             <TextField
-            defaultValue="username"
-            hintText="enter username"
-            errorText="This field is required"
-            floatingLabelText="enter username"
+            floatingLabelText="username"
             onChange = {this.handleUsername}
             /><br />
 
-            <TextField
-            defaultValue="password"
-            hintText="enter password"
-            errorText="This field is required"
-            floatingLabelText="enter password"
-            type="password"
+            <PasswordField
+            hintText="At least 8 characters"
+            floatingLabelText="password"
+            //errorText="Your password is too short"
             onChange = {this.handlePassword}
             /><br />
+
+            <TextField
+            hintText="confirm password"
+            floatingLabelText="re-enter password"
+            type="password"
+            onKeyDown = {this.handleConfirmPassword}
+            /><br />
+
+            <FlatButton className = "Sign_in" label="Sign in instead" primary={true} />
+            <RaisedButton label="Next" primary={true} style={style} />
         </form>
       </div>
 
