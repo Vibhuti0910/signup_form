@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import FormContainer from './containers/FormContainer';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import MyAwesomeReactComponent from './MyAwesomeReactComponent';
 
-class App extends Component {
-  render() {
-    return (
-      <div class = "App">
-      	Signup Form
-        <FormContainer />
-      </div>
-    );
-  }
-}
+const App = () => (
+  <MuiThemeProvider>
+    <MyAwesomeReactComponent />
+  </MuiThemeProvider>
+);
+ 
+ReactDOM.render(
+  <App />,
+  document.getElementById('app')
+);
 
 export default App;

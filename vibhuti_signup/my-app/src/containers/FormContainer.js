@@ -1,10 +1,12 @@
-import React ,{Component} from 'react';
-import Divider from 'material-ui/Divider';
-import Paper from 'material-ui/Paper';
+import React, { Component } from 'react';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import RaisedButton from 'material-ui/RaisedButton';
+import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
+import PasswordField from 'material-ui-password-field'
 
 const style = {
-  marginLeft: 20,
+  margin: 12,
 };
 
 class FormContainer extends Component {
@@ -68,47 +70,46 @@ class FormContainer extends Component {
     
   }
 
-  /*handleFormSubmit(e) {
-    e.preventDefault();
-    let userData = this.state.newUser;
-
-    fetch('http://example.com',{
-      method: "POST",
-      body: JSON.stringify(userData),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    }).then(response => {
-      response.json().then(data =>{
-        console.log("Successful"+data);
-      })
-    })
-  }*/
-
   render() {
     return(
       <div>
         <form>
-              name: 
-                <input type = "text" name = "FullName" value = {this.state.name} maxlength = "100" onChange = {this.handleFullName} />
-              <br />
-              age: 
-                <input type = "text" name = "age" value = {this.state.age} maxlength = "100" onChange = {this.handleAge}/>
-              <br />
-              username: 
-                <input type = "text" name = "username" value = {this.state.username} maxlength = "100" onChange = {this.handleUsername}/>
-              <br />
-              password: 
-                <input type = "password" name = "password" value = {this.state.password} maxlength = "100" onChange = {this.handlePassword}/>
-              <br />
-              confirmPassword: 
-                <input type = "password" name = "confirmPassword" value = {this.state.name} maxlength = "100" onChange = {this.handlelConfirmPassword} />
-              <br />
-              
+            <TextField
+            defaultValue="name"
+            hintText="enter name"
+            errorText="This field is required"
+            floatingLabelText="enter name"
+            onChange = {this.handleFullName}
+            /><br />
+
+            <TextField
+            defaultValue="age"
+            hintText="enter age"
+            errorText="This field is required"
+            floatingLabelText="enter age"
+            onChange = {this.handleAge}
+            /><br />
+
+            <TextField
+            defaultValue="username"
+            hintText="enter username"
+            errorText="This field is required"
+            floatingLabelText="enter username"
+            onChange = {this.handleUsername}
+            /><br />
+
+            <TextField
+            defaultValue="password"
+            hintText="enter password"
+            errorText="This field is required"
+            floatingLabelText="enter password"
+            type="password"
+            onChange = {this.handlePassword}
+            /><br />
         </form>
       </div>
-    );
+
+      );
   }
 }
 export default FormContainer;
