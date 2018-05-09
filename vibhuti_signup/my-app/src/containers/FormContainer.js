@@ -23,6 +23,10 @@ class FormContainer extends Component {
         password : '',
         confirmPassword: ''
       },
+      username: {errorText: ''},
+      password: {errorText: ''},
+      confirmPassword: {errorText: ''}
+
     }
       this.handleFName = this.handleFName.bind(this);
       this.handleLName = this.handleLName.bind(this);
@@ -39,23 +43,51 @@ class FormContainer extends Component {
 
   handleLName(e) {
         let value = e.target.value;
-      this.setState( prevState => ({ newUser : 
+        this.setState( prevState => ({ newUser : 
           {...prevState.newUser, Lname: value} 
         }), () => console.log(this.state.newUser))
   }
 
   handleUsername(e) {
+    let key = e.which
     let value = e.target.value;
-    this.setState( prevState => ({newUser:
-      {...prevState.newUser,username:value}
-    }), () => console.log(this.state.newUser))
+        if(key == 13) {
+          
+          let alphabet = /^[a-zA-Z]+$/; //regular expression
+          if(value.match(alphabet)) { //contains at least one alphabet
+            if(value.length >5 && value.length <31) {
+                this.setState( prevState => ({ newUser : 
+                {...prevState.newUser, Lname: value} 
+                }), () => console.log(this.state.newUser))
+            } else {
+              this.setState( prevState => ({username: {
+                errorText: 'length must be between 6 to 30 characters'}
+                }), () => console.log(this.state.username.errorText))
+            }
+          } else {
+            this.setState( prevState => ({username: {
+              errorText: 'There must be atleast one character'}
+              }), () => console.log(this.state.username.errorText))
+            }
+          }
   }
 
   handlePassword(e) {
     let value = e.target.value;
-    this.setState( prevState => ({newUser:
-      {...prevState.newUser,password: value}
-    }), () => console.log(this.state.newUser))
+    let key = e.which;
+    if(key == 13) {
+      if(value.length < 8) {
+        this.setState( prevState => ({password: {
+          errorText: 'password must have at least 8 characters'}
+        }),
+         () => console.log(this.state.password.errorText))
+            }
+      } else {
+        this.setState( prevState => ({newUser:
+        {...prevState.newUser,password: value}
+        }), () => console.log(this.state.newUser))
+      }
+    
   }
 
   handleConfirmPassword(e) {
@@ -67,10 +99,12 @@ class FormContainer extends Component {
         this.setState( prevState => ({newUser:
         {...prevState.newUser,confirmPassword: value}
         }), () => console.log(this.state.newUser))
-        alert("password confirmed")
+        
       } else {
-      alert(this.state.newUser.password);
-    }
+      this.setState( prevState => ({confirmPassword: {
+        errorText: 'password does not match'}
+        }), () => console.log(this.state.confirmPassword.errorText))
+      }
     }
     
   }
@@ -78,7 +112,7 @@ class FormContainer extends Component {
   render() {
     return(
       <div>
-        <form>
+        <form className = "signup">
             <AppBar
             title="Create your Account"
             iconClassNameRight="muidocs-icon-navigation-expand-more"
@@ -87,6 +121,7 @@ class FormContainer extends Component {
             floatingLabelText="first name"
             onChange = {this.handleFName}
             />
+            <br />
 
             <TextField
             floatingLabelText="last name"
@@ -97,19 +132,21 @@ class FormContainer extends Component {
 
             <TextField
             floatingLabelText="username"
-            onChange = {this.handleUsername}
+            errorText= {this.state.username.errorText}
+            onKeyDown = {this.handleUsername}
             /><br />
 
             <PasswordField
             hintText="At least 8 characters"
             floatingLabelText="password"
-            //errorText="Your password is too short"
+            errorText= {this.state.password.errorText}
             onChange = {this.handlePassword}
             /><br />
 
             <TextField
             hintText="confirm password"
             floatingLabelText="re-enter password"
+            errorText= {this.state.confirmPassword.errorText}
             type="password"
             onKeyDown = {this.handleConfirmPassword}
             /><br />
