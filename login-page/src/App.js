@@ -12,7 +12,8 @@ class App extends Component {
     <BrowserRouter>	
       <div className="App">
       	<Route path="/signup" exact component={LoginContainer} />
-      	<FormContainer />
+      	<Route path="/login" exact component={FormContainer} />
+      	{this.props.children}
       </div>
      </BrowserRouter>
     );
