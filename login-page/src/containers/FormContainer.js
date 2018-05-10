@@ -44,7 +44,25 @@ class FormContainer extends Component {
 			)
 		}
 
-		handleFormLogin() { }
+		handleFormLogin() {
+			axios.get('https://miteventbooking.herokuapp.com/login',{
+				params:{
+					username:this.state.loginUser.username,
+					password:this.state.loginUser.password
+				}
+			})
+			.then(response => {
+				if(response.username && response.email && response.displayName && response.phone) {
+					console.log('Successful Login');
+				}
+				else {
+					console.log('failed');
+				}
+			})
+			.catch(error => {
+				console.log("request couldn't be made", error);
+			})
+		}
 		handleForgotPassword() { }
 
 	render() {
