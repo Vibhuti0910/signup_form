@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import { MuiThemeProvider} from 'material-ui/styles';
+import axios from 'axios';
 import RaisedButton from 'material-ui/RaisedButton';
 import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
 import PasswordField from 'material-ui-password-field'
-
+import { Route , Link } from 'react-router-dom';
+import LoginContainer from './LoginContainer';
 
 
 class FormContainer extends Component {
@@ -52,56 +54,83 @@ class FormContainer extends Component {
 				}
 			})
 			.then(response => {
-				if(response.username && response.email && response.displayName && response.phone) {
-					console.log('Successful Login');
+				console.log(response);
+				if(response.data.code === 'success') {
+					var user = response.data.user;
+					alert("Welcome " + user.displayName);
 				}
-				else {
-					console.log('failed');
-				}
+				else if(response.data.code === 'failed')
+					alert("Unsuccessful login attempt");
 			})
 			.catch(error => {
-				console.log("request couldn't be made", error);
+				console.log("request couldn't be made",error);
 			})
 		}
 		handleForgotPassword() { }
 
 	render() {
 		return (
+
 			<div>
+			
 				<MuiThemeProvider>
 				<AppBar title ="Login" />
 
 				<form className="container-fluid" onSubmit={this.handleFormLogin}>
+
+					
+					
 
 					<TextField
 						hintText="Enter your Username"
 						floatingLabelText="Username"
 						onChange={this.handleUsername}
 						 />
+					
 					<br />
+					
 					<PasswordField
 						hintText="Enter your Password"
 						floatingLabelText="Password"
 						onChange={this.handlePassword}
 						 />
+
 					<br />
+
+
 					<RaisedButton 
 						label ='Login'
 						primary={true}
           				style={buttonStyle}
           				onClick={this.handleFormLogin}/>
-          			<RaisedButton
-          				label ='Forgot Password' 
+          			
+
+          			<Link to="/signup"><RaisedButton
+          				label ='SignUP' 
           				primary = {true}
           				style={buttonStyle}
-          				onClick={this.handleForgotPassword}/>
+          				onClick={this.handleForgotPassword}/></Link>
+
+
+
+          			
+					
+
 
 				</form>
 				</MuiThemeProvider>
+				
 			</div>
 
+
+
+
+
 			);
-		}
+	}
+ 
+
+	
 }
 
 const buttonStyle = {
