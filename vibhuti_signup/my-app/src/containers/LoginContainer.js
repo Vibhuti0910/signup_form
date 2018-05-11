@@ -117,6 +117,7 @@ class LoginContainer extends Component {
   }
 
   handleNext(e) {
+    e.preventDefault();
     var params = {
         username: this.state.newUser.username,
         password: this.state.newUser.password,
@@ -141,7 +142,7 @@ class LoginContainer extends Component {
   render() {
     return(
       <div>
-        <form className = "signup">
+        <form className = "signup" onSubmit = {this.handleNext}>
             <AppBar
             title="Create your Account"
             iconClassNameRight="muidocs-icon-navigation-expand-more"
@@ -189,7 +190,7 @@ class LoginContainer extends Component {
             /><br />
 
             <Link to = "/login"><FlatButton className = "Sign_in" label="Sign in instead" primary={true} /></Link>
-            <RaisedButton type = "submit" label="Next" primary={true} style={style} onClick = {this.handleNext}/>
+            <RaisedButton type = "submit" label="Next" primary={true} style={style} />
         </form>
       </div>
 
