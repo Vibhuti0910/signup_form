@@ -125,8 +125,11 @@ class LoginContainer extends Component {
     }
     axios.post('https://miteventbooking.herokuapp.com/signup', params)
     .then(function(resp) {
+        console.log(resp.data.code);
         if(resp.data.code ==='success') {
           alert('account created')
+        } else {
+          alert('please try again ');
         }
     })
     .catch(function(err) {
@@ -147,6 +150,7 @@ class LoginContainer extends Component {
             floatingLabelText="first name"
             errorText= {this.state.newUser.fname_error}
             onBlur = {this.handleFName}
+            required
             />
             <br />
 
@@ -154,6 +158,7 @@ class LoginContainer extends Component {
             floatingLabelText="last name"
             errorText= {this.state.newUser.lname_error}
             onBlur = {this.handleLName}
+            required
             />
 
             <br />
@@ -162,28 +167,29 @@ class LoginContainer extends Component {
             floatingLabelText="username"
             errorText= {this.state.newUser.username_error}
             onBlur = {this.handleUsername}
+            required
             /><br />
+            <div className = "username">You can use letters,numbers and periods.</div>
 
             <PasswordField
-            hintText="At least 8 characters"
+            hintText = "Atleast 8 characters"
             floatingLabelText="password"
             errorText= {this.state.newUser.password_error}
             onChange = {this.handlePassword}
+            required
             />
             <br />
 
             <PasswordField
-            hintText="confirm password"
-            floatingLabelText="re-enter password"
+            floatingLabelText="confirm password"
             errorText= {this.state.newUser.confirmPassword_error}
             type="password"
             onBlur = {this.handleConfirmPassword}
+            required
             /><br />
 
             <Link to = "/login"><FlatButton className = "Sign_in" label="Sign in instead" primary={true} /></Link>
-            <RaisedButton label="Next" required = {this.state.newUser.fname,this.state.newUser.lname,this.state.newUser.username,
-            this.state.newUser.password,this.state.newUser.confirmPassword}
-            primary={true} style={style} onClick = {this.handleNext}/>
+            <RaisedButton type = "submit" label="Next" primary={true} style={style} onClick = {this.handleNext}/>
         </form>
       </div>
 
