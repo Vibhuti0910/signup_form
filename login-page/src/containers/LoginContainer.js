@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import './LoginContainer.css';
+import { Route , Link } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import RaisedButton from 'material-ui/RaisedButton';
 import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
 import PasswordField from 'material-ui-password-field';
 import FlatButton from 'material-ui/FlatButton';
+import axios from 'axios';
 
 const style = {
   margin: 12,
@@ -17,148 +19,183 @@ class LoginContainer extends Component {
 
     this.state = {
       newUser: {
-        fname: '',
-        lname: '',
-        username : '',
-        password : '',
-        confirmPassword: ''
-      },
-      username: {errorText: ''},
-      password: {errorText: ''},
-      confirmPassword: {errorText: ''}
-
+        fname: '0',
+        lname: '0',
+        username : '0',
+        password : '0',
+        confirmPassword: '0',
+        fname_error:'',
+        lname_error:'',
+        username_error: '',
+        password_error:'',
+        confirmPassword_error:''
+      }
     }
       this.handleFName = this.handleFName.bind(this);
       this.handleLName = this.handleLName.bind(this);
       this.handleConfirmPassword = this.handleConfirmPassword.bind(this);
       this.handlePassword = this.handlePassword.bind(this);
       this.handleUsername = this.handleUsername.bind(this);
+      this.handleNext = this.handleNext.bind(this);
   }
   handleFName(e) {
-        let value = e.target.value;
+    let value = e.target.value;  
+    if(value.length<1) {
+      this.setState( prevState => ({newUser:
+        {fname_error : 'this field is required'}}));
+    } else {
       this.setState( prevState => ({ newUser : 
-          {...prevState.newUser, Fname: value} 
-        }), () => console.log(this.state.newUser))
+      {...prevState.newUser, Fname: value, fname_error : ''} 
+      }), () => console.log(this.state.newUser))
+    }
   }
 
   handleLName(e) {
-        let value = e.target.value;
-        this.setState( prevState => ({ newUser : 
-          {...prevState.newUser, Lname: value} 
-        }), () => console.log(this.state.newUser))
+      let value = e.target.value;  
+    if(value.length<1) {
+      this.setState( prevState => ({newUser:
+        {lname_error : 'this field is required'}}));
+    } else {
+      this.setState( prevState => ({ newUser : 
+      {...prevState.newUser, Fname: value, lname_error : ''} 
+      }), () => console.log(this.state.newUser))
+    }
   }
 
+
   handleUsername(e) {
-    let key = e.which
     let value = e.target.value;
-        if(key == 13) {
-          
-          let alphabet = /^[a-zA-Z]+$/; //regular expression
-          if(value.match(alphabet)) { //contains at least one alphabet
-            if(value.length >5 && value.length <31) {
-                this.setState( prevState => ({ newUser : 
-                {...prevState.newUser, Lname: value} 
-                }), () => console.log(this.state.newUser))
-            } else {
-              this.setState( prevState => ({username: {
-                errorText: 'length must be between 6 to 30 characters'}
-                }), () => console.log(this.state.username.errorText))
-            }
-          } else {
-            this.setState( prevState => ({username: {
-              errorText: 'There must be atleast one character'}
-              }), () => console.log(this.state.username.errorText))
-            }
-          }
+    let alphabet = value
+    alphabet = alphabet.replace(/[^a-zA-Z]+/g,"");
+    if(alphabet.length>0) { //contains at least one alphabet
+      if(value.length >2 && value.length <31) {
+          this.setState( prevState => ({ newUser : 
+          {...prevState.newUser, Lname: value, username_error: ''}
+          }), () => console.log(this.state.newUser))
+      } else {
+        this.setState( prevState => ({newUser: {
+          username_error: 'length must be between 3 to 30 characters'}
+          }), () => console.log(this.state.newUser.username_error))
+      }
+    } else {
+      this.setState( prevState => ({newUser: {
+        username_error: 'There must be atleast one character'}
+        }), () => console.log(this.state.newUser.username_error))
+    }
   }
 
   handlePassword(e) {
     let value = e.target.value;
-    let key = e.which;
-    if(key == 13) {
-      if(value.length < 8) {
-        this.setState( prevState => ({password: {
-          errorText: 'password must have at least 8 characters'}
-        }),
-         () => console.log(this.state.password.errorText))
-            }
-      } else {
-        this.setState( prevState => ({newUser:
-        {...prevState.newUser,password: value}
-        }), () => console.log(this.state.newUser))
-      }
-    
-  }
-
-  handleConfirmPassword(e) {
-    let key = e.which;
-    if(key == 13) {
-      let value = e.target.value;
-      let prevValue = this.state.newUser.password;
-      if (value === prevValue) {
-        this.setState( prevState => ({newUser:
-        {...prevState.newUser,confirmPassword: value}
-        }), () => console.log(this.state.newUser))
-        
-      } else {
-      this.setState( prevState => ({confirmPassword: {
-        errorText: 'password does not match'}
-        }), () => console.log(this.state.confirmPassword.errorText))
-      }
+    if(value.length < 8) {
+      this.setState( prevState => ({newUser: {
+        password_error: 'password must have at least 8 characters'}
+      }),
+       () => console.log(this.state.newUser.password_error))
+          }
+   else {
+      this.setState( prevState => ({newUser:
+      {...prevState.newUser,password: value,password_error:''}
+      }), () => console.log(this.state.newUser))
     }
     
   }
 
+  handleConfirmPassword(e) {
+    let value = e.target.value;
+    let prevValue = this.state.newUser.password;
+    if (value === prevValue) {
+      this.setState( prevState => ({newUser:
+      {...prevState.newUser,confirmPassword: value,confirmPassword_error:''}
+      }), () => console.log(this.state.newUser))
+      
+    } else {
+    this.setState( prevState => ({newUser: {
+      confirmPassword_error: 'password does not match'}
+      }), () => console.log(this.state.newUser.confirmPassword_error))
+    }
+    
+  }
+
+  handleNext(e) {
+    e.preventDefault();
+    var params = {
+        username: this.state.newUser.username,
+        password: this.state.newUser.password,
+        fname: this.state.newUser.fname,
+        lname: this.state.newUser.lname
+    }
+    axios.post('https://miteventbooking.herokuapp.com/signup', params)
+    .then(function(resp) {
+        console.log(resp.data.code);
+        if(resp.data.code ==='success') {
+          alert('account created')
+        } else {
+          alert('please try again ');
+        }
+    })
+    .catch(function(err) {
+        alert("request couldn't be made", err)
+    })
+    
+}
+
   render() {
     return(
       <div>
-        <MuiThemeProvider>
-        <form className = "signup">
+        <form className = "signup" onSubmit = {this.handleNext}>
             <AppBar
             title="Create your Account"
             iconClassNameRight="muidocs-icon-navigation-expand-more"
             />
             <TextField className = "fname"
             floatingLabelText="first name"
-            onChange = {this.handleFName}
+            errorText= {this.state.newUser.fname_error}
+            onBlur = {this.handleFName}
+            required
             />
             <br />
 
             <TextField
             floatingLabelText="last name"
-            onChange = {this.handleLName}
+            errorText= {this.state.newUser.lname_error}
+            onBlur = {this.handleLName}
+            required
             />
 
             <br />
 
             <TextField
             floatingLabelText="username"
-            errorText= {this.state.username.errorText}
-            onKeyDown = {this.handleUsername}
+            errorText= {this.state.newUser.username_error}
+            onBlur = {this.handleUsername}
+            required
             /><br />
+            <div className = "username">You can use letters,numbers and periods.</div>
 
             <PasswordField
-            hintText="At least 8 characters"
+            hintText = "Atleast 8 characters"
             floatingLabelText="password"
-            errorText= {this.state.password.errorText}
+            errorText= {this.state.newUser.password_error}
             onChange = {this.handlePassword}
-            /><br />
+            required
+            />
+            <br />
 
-            <TextField
-            hintText="confirm password"
-            floatingLabelText="re-enter password"
-            errorText= {this.state.confirmPassword.errorText}
+            <PasswordField
+            floatingLabelText="confirm password"
+            errorText= {this.state.newUser.confirmPassword_error}
             type="password"
-            onKeyDown = {this.handleConfirmPassword}
+            onBlur = {this.handleConfirmPassword}
+            required
             /><br />
 
-            <FlatButton className = "Sign_in" label="Sign in instead" primary={true} />
-            <RaisedButton label="Next" primary={true} style={style} />
+            <Link to = "/login"><FlatButton className = "Sign_in" label="Sign in instead" primary={true} /></Link>
+            <RaisedButton type = "submit" label="Next" primary={true} style={style} />
         </form>
-        </MuiThemeProvider>
       </div>
 
       );
   }
 }
 export default LoginContainer;
+
