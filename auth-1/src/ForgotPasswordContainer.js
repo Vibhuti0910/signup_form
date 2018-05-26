@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
 
 import './ForgotPasswordContainer.css'
-import header-bg from './header-bg.jpeg';
+import headerbg from './header-bg.jpeg';
 
 const paperStyle = {
   padding: 30,
@@ -34,7 +34,7 @@ class ForgotPasswordContainer extends Component {
   }
 
   	handleForgotPasswordSubmit (e) {
-  		
+
   	}
 
 	render() {
@@ -52,7 +52,7 @@ class ForgotPasswordContainer extends Component {
               	  			<RaisedButton className="submitButton" type="submit" label="Submit" primary={true}  />	
               	  		</div>
 
-              	  		<br /><br /><br /> <Link className="bottomAlign" to="/auth/signin">Back</Link>
+              	  		<br /><br /><br /> <p>Back</p>
               	  </form>
               	  </div>
             </div>
