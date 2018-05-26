@@ -45,10 +45,13 @@ class ForgotPasswordContainer extends Component {
             <div>
               	  <div style={{display: 'flex', alignItems: 'space-between'}}>
               	  <form onSubmit={this.handleForgotPasswordSubmit}>
-              	  	<h2 className="paperTitle">Forgot Password</h2>
+              	  	
+                    <h2 >Forgot Password</h2>
               	  	<p className="paperTitle">No worries! We'll help you retrieve your account.</p>
+                    <br />
+                    <br />
               	  		<div className="fieldsContainer">
-              	  			<TextField hintText="Email" value={this.state.username} onChange={this.changeUsername} required />
+              	  			<TextField hintText="Username" value={this.state.username} onChange={this.changeUsername} required />
               	  			<RaisedButton className="submitButton" type="submit" label="Submit" primary={true}  />	
               	  		</div>
 
