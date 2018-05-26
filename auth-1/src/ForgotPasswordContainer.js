@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
 
 import './ForgotPasswordContainer.css'
+import header-bg from './header-bg.jpeg';
 
 const paperStyle = {
   padding: 30,
